@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Suleman Khan, Senior Researcher and AI Team Lead at WeGo Robotics. Humanoid teleoperation, imitation learning and reinforcement learning.">
+<title>Suleman Khan · WeGo Robotics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070a0f;--panel:#0c1118;--panel2:#101720;--text:#f2f5f7;--muted:#8d98a5;
+  --line:rgba(255,255,255,.10);--accent:#62e6b0;--accent2:#9a7cff;--max:1240px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,'Noto Sans KR',system-ui,sans-serif;overflow-x:hidden}
+html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3,html[lang=ko] h4,html[lang=ko] strong,html[lang=ko] .frame .tag b,html[lang=ko] .card ul.plain li b{font-family:'Space Grotesk','Noto Sans KR',sans-serif}
+html[lang=ko] h1,html[lang=ko] .contact h2{letter-spacing:-.03em;line-height:1}
+html[lang=ko] .section-title{letter-spacing:-.03em;line-height:1.08}
+html[lang=ko] .mono,html[lang=ko] .cap,html[lang=ko] .chip,html[lang=ko] .row .when,html[lang=ko] .t-row .year,html[lang=ko] .t-row .type,html[lang=ko] .pub .v,html[lang=ko] .bignum small{font-family:'DM Mono','Noto Sans KR',monospace}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+img,video{display:block;max-width:100%}
+.container{width:min(calc(100% - 48px),var(--max));margin:auto}
+.mono{font:12px "DM Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono.ac{color:var(--accent)}
+
+header{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid transparent;transition:.4s var(--ease)}
+header.scrolled{background:rgba(7,10,15,.78);backdrop-filter:blur(18px);border-color:var(--line)}
+.nav{height:74px;display:flex;align-items:center;justify-content:space-between}
+.logo{font:600 15px "Space Grotesk";letter-spacing:.05em}
+.logo span{color:var(--accent)}
+.navlinks{display:flex;gap:28px}
+.navlinks a{font-size:13px;color:#aab3bd;transition:.25s}
+.navlinks a:hover{color:#fff}
+.nav-cta{border:1px solid var(--line);padding:10px 14px;border-radius:100px;font-size:12px;background:rgba(255,255,255,.02)}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;padding:130px 0 80px}
+.grid-bg{position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:72px 72px;mask-image:linear-gradient(to bottom,#000 0%,transparent 88%)}
+.glow{position:absolute;width:560px;height:560px;right:-180px;top:5%;background:radial-gradient(circle,rgba(98,230,176,.10),transparent 67%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:start;position:relative}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent)}
+h1{font:600 clamp(64px,9vw,124px)/.84 "Space Grotesk",sans-serif;letter-spacing:-.075em;margin:0 0 36px;max-width:850px}
+h1 em{font-style:normal;color:#707a85}
+.hero-copy{max-width:600px;color:#a9b2bc;font-size:17px;line-height:1.7}
+.hero-copy b{color:var(--text);font-weight:500}
+.hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.btn{padding:13px 18px;border:1px solid var(--line);border-radius:999px;font-size:13px;transition:.3s var(--ease);display:inline-flex;align-items:center;gap:10px}
+.btn.primary{background:var(--text);color:#070a0f;border-color:var(--text)}
+.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.3)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:48px}
+.stat{padding:22px 18px 0 0;border-right:1px solid var(--line);margin-right:18px}
+.stat:last-child{border-right:0}
+.stat strong{display:block;font:500 34px/1 "Space Grotesk";letter-spacing:-.03em;margin:8px 0 6px}
+.stat span{font-size:12px;color:var(--muted);line-height:1.5;display:block}
+.stat strong span{display:inline;font:inherit;color:inherit}
+
+.portrait{position:relative;padding-top:24px;display:grid;place-items:center}
+.stage{position:relative;width:min(100%,470px);aspect-ratio:1;display:grid;place-items:center}
+.stage .halo{position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,rgba(98,230,176,.18),rgba(98,230,176,.04) 45%,transparent 70%);filter:blur(8px);pointer-events:none}
+.ring{position:absolute;border:1px solid rgba(255,255,255,.22);border-radius:50%;animation:spin 22s linear infinite}
+.ring.r1{inset:0}
+.ring.r2{inset:11%;animation-duration:15s;animation-direction:reverse;border-style:dashed;border-color:rgba(98,230,176,.45)}
+.ring.r3{inset:22%;animation-duration:30s;border-color:rgba(255,255,255,.12)}
+.orb{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent);top:-5px;left:50%;margin-left:-4px;box-shadow:0 0 22px var(--accent)}
+.ring.r2 .orb{background:var(--accent2);box-shadow:0 0 22px var(--accent2);width:7px;height:7px;top:-4px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.frame{position:relative;width:62%;aspect-ratio:3/4;z-index:2;border:1px solid rgba(255,255,255,.18);background:var(--panel);overflow:hidden;
+  box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 80px rgba(98,230,176,.06)}
+.frame img{width:100%;height:100%;object-fit:cover;object-position:50% 15%;filter:saturate(.85) contrast(1.05)}
+.frame:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,10,15,.85),transparent 45%)}
+.frame .tag{position:absolute;left:16px;bottom:16px;z-index:2}
+.frame .tag b{display:block;font:500 15px "Space Grotesk";letter-spacing:.02em}
+.frame .corner{position:absolute;width:14px;height:14px;border:1px solid var(--accent);z-index:2}
+.frame .c1{top:10px;left:10px;border-right:0;border-bottom:0}.frame .c2{top:10px;right:10px;border-left:0;border-bottom:0}
+.frame .c3{bottom:10px;left:10px;border-right:0;border-top:0}.frame .c4{bottom:10px;right:10px;border-left:0;border-top:0}
+.frame .live{position:absolute;top:16px;right:16px;z-index:2;display:flex;gap:8px;align-items:center}
+
+/* sections */
+section{padding:130px 0}
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:flex-end;margin-bottom:55px}
+.section-title{font:500 clamp(40px,6vw,76px)/.95 "Space Grotesk";letter-spacing:-.055em;margin:0}
+.section-intro{max-width:440px;color:var(--muted);line-height:1.7;font-size:14px}
+.section-intro b{color:var(--text);font-weight:500}
+
+/* work grid */
+.work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.project{grid-column:span 6;border:1px solid var(--line);background:var(--panel);padding:24px;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:.5s var(--ease)}
+.project.w7{grid-column:span 7}.project.w5{grid-column:span 5}.project.w4{grid-column:span 4}
+.project:hover{border-color:rgba(255,255,255,.25);transform:translateY(-4px)}
+.media{margin:18px -24px 22px;position:relative;aspect-ratio:16/9;background:#080c12;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.media video,.media img,.media iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.project.w5 .media{aspect-ratio:4/3}
+.media .scan{position:absolute;left:0;right:0;height:1px;background:var(--accent);opacity:.35;animation:scan 3.5s ease-in-out infinite;pointer-events:none}
+@keyframes scan{0%,100%{top:8%}50%{top:92%}}
+.media .cap{position:absolute;left:14px;bottom:12px;z-index:2;font:10px "DM Mono";letter-spacing:.08em;text-transform:uppercase;color:#cfd6dd;background:rgba(7,10,15,.6);padding:5px 8px;border:1px solid var(--line);backdrop-filter:blur(6px)}
+.yt{cursor:pointer}
+.yt img{filter:saturate(.8) brightness(.85);transition:.4s}
+.yt:hover img{filter:none;transform:scale(1.03)}
+.yt .play{position:absolute;inset:0;display:grid;place-items:center;z-index:2}
+.yt .play i{width:62px;height:62px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:rgba(7,10,15,.55);display:grid;place-items:center;backdrop-filter:blur(6px)}
+.yt .play i:after{content:"";border-left:16px solid var(--text);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.project-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-top:auto}
+.project h3{font:500 25px "Space Grotesk";margin:6px 0 0;letter-spacing:-.02em}
+.project p{color:var(--muted);font-size:13px;line-height:1.65;margin:10px 0 0}
+.arrow{font-size:20px;color:var(--accent);flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{font:10px "DM Mono";letter-spacing:.06em;text-transform:uppercase;color:#b7c0c9;border:1px solid var(--line);padding:5px 8px;border-radius:999px}
+.chip.lead{color:var(--accent);border-color:rgba(98,230,176,.4)}
+.chip.co{color:var(--accent2);border-color:rgba(154,124,255,.4)}
+
+/* stack */
+.stack{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.stack-item{padding:28px 20px 30px;border-right:1px solid var(--line);min-height:145px}
+.stack-item:last-child{border-right:0}
+.stack-item strong{display:block;font:500 24px "Space Grotesk";margin:10px 0 6px}
+.stack-item span{font-size:12px;color:var(--muted);display:block;line-height:1.6}
+.stack-item .chips{margin-top:16px}
+
+/* map */
+.map-wrap{border:1px solid var(--line);background:var(--panel);padding:45px;overflow:hidden}
+.map{position:relative;aspect-ratio:2/1;min-height:440px;background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px);background-size:28px 28px}
+.map svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.edge{fill:none;stroke:rgba(255,255,255,.16);stroke-width:1;transition:stroke .35s,stroke-width .35s}
+.edge.spoke{stroke-dasharray:3 7;animation:flow 1.6s linear infinite}
+.edge.lit{stroke:var(--accent);stroke-width:1.6}
+@keyframes flow{to{stroke-dashoffset:-20}}
+.pulse{position:absolute;left:0;top:0;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px var(--accent),0 0 2px #fff;pointer-events:none;will-change:transform}
+.pulse:nth-of-type(2){background:var(--accent2);box-shadow:0 0 18px var(--accent2)}
+.map-node{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);width:135px;height:135px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;text-align:center;background:rgba(7,10,15,.88);backdrop-filter:blur(8px);transition:.35s var(--ease);cursor:pointer}
+.map-node:hover,.map-node.on{border-color:var(--accent);transform:translate(-50%,-50%) scale(1.06);box-shadow:0 0 50px rgba(98,230,176,.10);background:rgba(98,230,176,.08)}
+.map-node b{display:block;font:500 16px "Space Grotesk"}
+.map-node small{display:block;color:var(--muted);font:10px "DM Mono";margin-top:6px}
+.map-core{width:160px;height:160px;border-color:rgba(98,230,176,.45);animation:breathe 3.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 40px rgba(98,230,176,.08)}50%{box-shadow:0 0 90px rgba(98,230,176,.26)}}
+.map-note{margin-top:22px;min-height:48px;color:var(--muted);font-size:14px;line-height:1.7;max-width:720px}
+.map-note b{color:var(--text);font-weight:500}
+
+/* research */
+.paper{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+.card{border:1px solid var(--line);background:var(--panel);padding:28px;position:relative;overflow:hidden}
+.card h3{font:500 30px/1.1 "Space Grotesk";letter-spacing:-.03em;margin:10px 0 16px}
+.card p{color:var(--muted);font-size:14px;line-height:1.75;margin:0 0 14px}
+.card p b{color:var(--text);font-weight:500}
+.figure{background:#fff;border:1px solid var(--line);padding:14px}
+.figure img{width:100%}
+.figcap{margin-top:12px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.kpi{border-top:1px solid var(--line);padding-top:14px}
+.kpi strong{display:block;font:500 30px/1 "Space Grotesk";letter-spacing:-.03em;margin-bottom:6px}
+.kpi strong span{color:var(--accent)}
+.kpi span{font:10px "DM Mono";letter-spacing:.08em;text-transform:uppercase;color:var(--muted);line-height:1.5;display:block}
+.pubs{border-top:1px solid var(--line);margin-top:14px}
+.pub{display:grid;grid-template-columns:50px 1fr 160px;gap:24px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
+.pub .n{font:12px "DM Mono";color:var(--accent)}
+.pub h4{font:500 17px/1.35 "Space Grotesk";margin:0 0 6px;letter-spacing:-.01em}
+.pub p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.pub .v{text-align:right;font:11px "DM Mono";letter-spacing:.05em;color:#8d98a5;line-height:1.6}
+.pub .v a{color:var(--accent)}
+
+/* project list */
+.yearblock{border-top:1px solid var(--line);padding-top:26px;margin-top:40px;display:grid;grid-template-columns:200px 1fr;gap:30px}
+.yearblock:first-of-type{margin-top:0}
+.ylabel strong{display:block;font:500 56px/.9 "Space Grotesk";letter-spacing:-.05em}
+.ylabel span{display:block;margin-top:12px;color:var(--muted);font-size:13px;line-height:1.6;max-width:170px}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:118px 1fr 160px;gap:22px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
+.row:first-child{padding-top:4px}
+.row .when{font:11px "DM Mono";color:var(--accent);letter-spacing:.05em;line-height:1.6;padding-top:5px}
+.row h3{font:500 19px/1.3 "Space Grotesk";margin:0 0 8px;letter-spacing:-.015em}
+.row p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+.row .side{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.row .thumb{display:block;width:160px;aspect-ratio:16/9;border:1px solid var(--line);overflow:hidden;position:relative;background:#080c12;object-fit:cover;filter:saturate(.85)}
+.row .thumb img{width:100%;height:100%;object-fit:cover}
+.row a.thumb:after{content:"▶";position:absolute;inset:0;display:grid;place-items:center;font-size:12px;color:#fff;background:rgba(7,10,15,.25)}
+
+/* journey */
+.timeline{border-top:1px solid var(--line)}
+.t-row{display:grid;grid-template-columns:150px 1fr 110px;gap:25px;padding:30px 0;border-bottom:1px solid var(--line);align-items:start}
+.t-row .year{font:12px "DM Mono";color:var(--accent);padding-top:6px;line-height:1.6}
+.t-row h3{font:500 22px "Space Grotesk";margin:0 0 4px;letter-spacing:-.015em}
+.t-row .org{color:#b7c0c9;font-size:13px;margin-bottom:12px}
+.t-row ul{margin:0;padding-left:16px;color:var(--muted);font-size:13px;line-height:1.7}
+.t-row .type{text-align:right;font:10px "DM Mono";color:#69737d;padding-top:8px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.card ul.plain{margin:0;padding:0;list-style:none}
+.card ul.plain li{padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);line-height:1.6}
+.card ul.plain li:last-child{border-bottom:0}
+.card ul.plain li b{color:var(--text);font-weight:500;display:block;font-family:"Space Grotesk";font-size:15px;margin-bottom:2px}
+
+/* contact */
+.contact{min-height:70vh;display:flex;align-items:center;border-top:1px solid var(--line)}
+.contact h2{font:500 clamp(58px,10vw,140px)/.85 "Space Grotesk";letter-spacing:-.075em;margin:0 0 45px}
+.contact h2 span{color:var(--accent)}
+.contact-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:30px}
+.contact-info{color:var(--muted);font-size:14px;line-height:1.8}
+.contact-info b{color:var(--text);font-weight:500}
+.contact-links{display:flex;gap:10px;flex-wrap:wrap}
+footer{padding:25px 0;border-top:1px solid var(--line);color:#69737d;font:10px "DM Mono"}
+footer .container{display:flex;justify-content:space-between;gap:20px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+.cursor{position:fixed;width:18px;height:18px;border:1px solid rgba(255,255,255,.45);border-radius:50%;pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
+
+@media(max-width:1000px){
+  .project.w7,.project.w5,.project.w4{grid-column:span 6}
+}
+@media(max-width:850px){
+  .container{width:min(calc(100% - 32px),var(--max))}
+  .navlinks{display:none}
+  .hero{padding-top:110px}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .portrait{order:-1;padding-top:0}
+  .stage{width:min(100%,340px)}
+  h1{font-size:clamp(56px,17vw,100px)}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:0}.stat:nth-child(3),.stat:nth-child(4){border-top:1px solid var(--line);margin-top:18px}
+  section{padding:90px 0}
+  .section-head{display:block}.section-intro{margin-top:20px}
+  .project,.project.w7,.project.w5,.project.w4{grid-column:1/-1}
+  .stack{grid-template-columns:1fr 1fr}.stack-item:nth-child(2){border-right:0}.stack-item:nth-child(3),.stack-item:nth-child(4){border-top:1px solid var(--line)}
+  .map-wrap{padding:18px}.map{aspect-ratio:1/1.3;min-height:0}.map-node{width:86px;height:86px}.map-node b{font-size:12px}.map-node small{font-size:8px;margin-top:3px}.map-core{width:104px;height:104px}
+  .paper,.two{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .pub{grid-template-columns:40px 1fr}.pub .v{grid-column:2;text-align:left}
+  .yearblock{grid-template-columns:1fr;gap:18px}.ylabel span{max-width:none}
+  .row{grid-template-columns:1fr}.row .when{padding-top:0}.row .side{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+  .t-row{grid-template-columns:1fr}.t-row .type{display:none}.t-row .year{padding-top:0}
+  .contact-bottom,footer .container{display:block}.contact-links{margin-top:25px}
+  .cursor{display:none}
+}
+@media(prefers-reduced-motion:reduce){.ring,.map-core,.edge.spoke,.media .scan{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<header id="header">
+  <div class="container nav">
+    <a class="logo" href="#top">SULEMAN<span>.</span>KHAN</a>
+    <nav class="navlinks">
+      <a href="#work" data-i18n="nav.work">WORK</a>
+      <a href="#publications" data-i18n="nav.pubs">PUBLICATIONS</a>
+      <a href="#projects" data-i18n="nav.projects">PROJECTS</a>
+      <a href="#journey" data-i18n="nav.journey">JOURNEY</a>
+      <a href="#contact" data-i18n="nav.contact">CONTACT</a>
+    </nav>
+    <div style="display:flex;gap:8px"><button class="nav-cta" id="langBtn" aria-label="Switch language">한국어</button><a class="nav-cta" href="#contact" data-i18n="nav.cta">LET'S TALK ↗</a></div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="grid-bg"></div><div class="glow"></div>
+  <div class="container hero-grid">
+    <div class="reveal">
+      <div class="eyebrow mono" data-i18n="hero.eyebrow"><span class="dot"></span> Humanoids · Robot learning · Yongin, Korea</div>
+      <h1>SULEMAN<br><em>KHAN</em></h1>
+      <p class="hero-copy" data-i18n="hero.copy">I'm a <b>Senior Researcher and AI Team Lead at WeGo Robotics</b>. I work on humanoid teleoperation, motion retargeting, and imitation and reinforcement learning, and I lead development of <b>WeGo Humanoid Studio</b>.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#work" data-i18n="hero.b1">Selected work ↓</a>
+        <a class="btn" href="https://www.youtube.com/@wegorobotics" target="_blank" rel="noopener" data-i18n="hero.b2">WeGo on YouTube ↗</a>
+        <a class="btn" href="https://github.com/sulemank137" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/suleman-khan-251981178/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="mono">01</div><strong><span id="nYrs"></span><span data-i18n="stat1.u">+ yrs</span></strong><span data-i18n="stat1.l">in robotics, at Hanback Electronics and WeGo Robotics since Feb 2022</span></div>
+        <div class="stat"><div class="mono">02</div><strong id="nProj"></strong><span data-i18n="stat2.l">projects and client deliveries, 2023 – 2026</span></div>
+        <div class="stat"><div class="mono">03</div><strong>8</strong><span data-i18n="stat3.l">people on the AI Team I lead, in 4 cells</span></div>
+        <div class="stat"><div class="mono">04</div><strong>5</strong><span data-i18n="stat4.l">peer-reviewed publications, one manuscript in preparation</span></div>
+      </div>
+    </div>
+    <div class="portrait reveal">
+      <div class="stage">
+        <div class="halo"></div>
+        <div class="ring r1"><i class="orb"></i></div>
+        <div class="ring r2"><i class="orb"></i></div>
+        <div class="ring r3"></div>
+        <div class="frame">
+          <i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i>
+          <div class="live mono"><span class="dot"></span> Yongin · KST</div>
+          <img src="assets/headshot.jpg" alt="Suleman Khan" width="720" height="960">
+          <div class="tag"><b>Suleman Khan</b><div class="mono" data-i18n="hero.role">Senior Researcher · AI Team Lead</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 WORK -->
+<section id="work">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="mono" data-i18n="work.mono">01 / Selected work</div>
+        <h2 class="section-title" data-i18n="work.title">Recent<br>work</h2>
+      </div>
+      <p class="section-intro" data-i18n="work.intro">Seven projects from 2025 and 2026. The videos are my own recordings or WeGo channel videos of my work. <b>LEAD</b> means I led the project; <b>CO-DEV</b> means I built it with a teammate who led.</p>
+    </div>
+
+    <div class="work-grid">
+      <article class="project w7 reveal">
+        <div class="mono" data-i18n="c1.mono">01 — PRODUCT · 2026 · <span class="ac">LEAD</span></div>
+        <div class="media">
+          <video muted loop playsinline preload="metadata" poster="assets/studio_promo.jpg" data-autoplay><source src="assets/studio_promo.mp4" type="video/mp4"></video>
+          <div class="scan"></div><div class="cap" data-i18n="c1.cap">Promo film · WeGo Humanoid Studio 2.0</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3>WeGo Humanoid Studio 2.0</h3>
+          <p data-i18n="c1.p">Software for humanoid teleoperation, demonstration recording and policy training (ACT, Diffusion). It drives a Unitree G1, R1 or H2 from a VDSuit with a live 3D preview and supports four dexterous hands. Version 2.0.4 was released on 30 Sep 2026, after an on-site install at a corporate R&amp;D institute.</p>
+          <div class="chips"><span class="chip">Motion retargeting</span><span class="chip">LeRobot</span><span class="chip">ACT · Diffusion</span><span class="chip">RH56F1 · Revo2 · Dex3</span><span class="chip">ZeroMQ API</span></div>
+        </div><span class="arrow">↗</span></div>
+      </article>
+
+      <article class="project w5 reveal">
+        <div class="mono" data-i18n="c2.mono">02 — MOTION TRANSFER · 2026 · <span class="ac">LEAD</span></div>
+        <div class="media yt" data-id="3nASs-xmQX4">
+          <img src="assets/yt_3nASs-xmQX4.jpg" alt="Unitree G1 motion transfer" loading="lazy">
+          <div class="play"><i></i></div><div class="cap" data-i18n="c2.cap">WeGo YouTube · Human → simulation → real robot</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3 data-i18n="c2.h">G1 motion transfer</h3>
+          <p data-i18n="c2.p">Human reference motion retargeted to the Unitree G1, checked in simulation, then run on the robot.</p>
+          <div class="chips"><span class="chip">Retargeting</span><span class="chip">Sim validation</span><span class="chip">Unitree G1</span></div>
+        </div><span class="arrow">↗</span></div>
+      </article>
+
+      <article class="project w5 reveal">
+        <div class="mono" data-i18n="c3.mono">03 — TELEOPERATION · 2026 · <span class="ac">LEAD</span></div>
+        <div class="media">
+          <video muted loop playsinline preload="metadata" poster="assets/g1_teleop_ball.jpg" data-autoplay><source src="assets/g1_teleop_ball.mp4" type="video/mp4"></video>
+          <div class="scan"></div><div class="cap" data-i18n="c3.cap">Lab footage · VDSuit → G1 + Inspire hands</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3 data-i18n="c3.h">Whole-body teleop and dexterous retargeting</h3>
+          <p data-i18n="c3.p">Live VDSuit motion capture streamed to a G1 with an RL controller, tested sim-to-sim and sim-to-real for KROS. In April 2026 I reverse-engineered NVIDIA's GR00T whole-body-control pipeline to make live teleoperation stable. I also retargeted VD mHand Pro gloves to the Inspire RH56F1 hand for a corporate R&amp;D client.</p>
+          <div class="chips"><span class="chip">GR00T WBC</span><span class="chip">mink IK</span><span class="chip">Sim-to-real</span><span class="chip">mHand Pro</span></div>
+        </div><span class="arrow">↗</span></div>
+      </article>
+
+      <article class="project w7 reveal">
+        <div class="mono">04 — REAL2SIM2REAL · 2026 · <span class="ac">LEAD</span></div>
+        <div class="media">
+          <video muted loop playsinline preload="metadata" poster="assets/dance_promo.jpg" data-autoplay><source src="assets/dance_promo.mp4" type="video/mp4"></video>
+          <div class="scan"></div><div class="cap" data-i18n="c4.cap">Promo film · dance pipeline</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3 data-i18n="c4.h">K-pop dance from one generated image</h3>
+          <p data-i18n="c4.p">A generated image became a 10-second dance video, then 3D human motion retargeted to the G1's 29 joints. The policy was trained with RL in 4,096 parallel simulations for 30,000 iterations, passed 10/10 checks in a second simulator, and then ran on the real robot. Each dance took about 3 hours of human work and 9 hours of GPU time.</p>
+          <div class="chips"><span class="chip">Video → motion</span><span class="chip">Retargeting</span><span class="chip">RL · sim-to-sim</span><span class="chip">Unitree G1</span></div>
+        </div><span class="arrow">↗</span></div>
+      </article>
+
+      <article class="project w4 reveal">
+        <div class="mono" data-i18n="c5.mono">05 — WHOLE-BODY CONTROL · 2026</div>
+        <div class="media yt" data-id="Km5gDLUtpM4">
+          <img src="assets/yt_Km5gDLUtpM4.jpg" alt="G1 retargeting and whole-body control" loading="lazy">
+          <div class="play"><i></i></div><div class="cap" data-i18n="c5.cap">WeGo YouTube · G1 retargeting &amp; WBC</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3 data-i18n="c5.h">G1 retargeting and whole-body control</h3>
+          <p data-i18n="c5.p">Live motion retargeting with a whole-body controller on the Unitree G1, demonstrated at KRoC 2026.</p>
+        </div><span class="arrow">↗</span></div>
+      </article>
+
+      <article class="project w4 reveal">
+        <div class="mono" data-i18n="c6.mono">06 — INTERACTION · 2026 · <span class="ac">LEAD</span></div>
+        <div class="media">
+          <video muted loop playsinline preload="metadata" poster="assets/docent_gesture.jpg" data-autoplay><source src="assets/docent_gesture.mp4" type="video/mp4"></video>
+          <div class="scan"></div><div class="cap" data-i18n="c6.cap">Gesture library · G1 greeting, MuJoCo render</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3 data-i18n="c6.h">Korean conversational docent robot</h3>
+          <p data-i18n="c6.p">Custom "WeGo" wake word, faster-whisper large-v3-turbo speech recognition, Claude with a local Kanana-1.5 fallback, RAG over company documents, and arm gestures timed to speech with mink IK. In simulation on 2 Oct 2026 it passed 88/88 synthetic end-to-end tests and 49 of 50 Korean test inputs, and detected barge-in within 0.57 s.</p>
+          <div class="chips"><span class="chip">STT · LLM · RAG · TTS</span><span class="chip">Wake word</span><span class="chip">mink IK</span></div>
+        </div><span class="arrow">↗</span></div>
+      </article>
+
+      <article class="project w4 reveal">
+        <div class="mono" data-i18n="c7.mono">07 — CLIENT PROJECT · 2025 – MAR 2026 · <span class="ac">LEAD</span></div>
+        <div class="media yt" data-id="sVBeeHizY70">
+          <img src="assets/yt_sVBeeHizY70.jpg" alt="FR dual-arm teleoperation" loading="lazy">
+          <div class="play"><i></i></div><div class="cap" data-i18n="c7.cap">WeGo YouTube · FR dual-arm teleop</div>
+        </div>
+        <div class="project-meta"><div>
+          <h3 data-i18n="c7.h">Dual-arm imitation learning for a power-utility IT company</h3>
+          <p data-i18n="c7.p">Built with a colleague: data collection, training and on-robot inference for two FR5 arms with myCobot 450 leader arms, DH AG95 grippers and custom master grippers. Delivered in March 2026 with manuals and video guides.</p>
+          <div class="chips"><span class="chip">FR5 ×2</span><span class="chip">Imitation learning</span><span class="chip">Teleoperation</span></div>
+        </div><span class="arrow">↗</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 02 STACK -->
+<section id="systems">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="mono" data-i18n="st.mono">02 / Capability stack</div><h2 class="section-title" data-i18n="st.title">Tools and<br>methods</h2></div>
+      <p class="section-intro" data-i18n="st.intro">What I use day to day, grouped by area.</p>
+    </div>
+    <div class="stack reveal">
+      <div class="stack-item"><div class="mono">01 · L1</div><strong data-i18n="st1.h">LEARNING</strong><span data-i18n="st1.p">VLA models, imitation learning, and the teleoperation data pipelines that feed them.</span>
+        <div class="chips"><span class="chip">ACT</span><span class="chip">Diffusion Policy</span><span class="chip">VLA</span><span class="chip">LeRobot</span><span class="chip">PyTorch</span></div></div>
+      <div class="stack-item"><div class="mono">02 · L2</div><strong data-i18n="st2.h">CONTROL</strong><span data-i18n="st2.p">Motion retargeting, whole-body control and reinforcement learning for humanoids.</span>
+        <div class="chips"><span class="chip">Isaac Sim / Lab</span><span class="chip">MuJoCo</span><span class="chip">Pinocchio · mink</span><span class="chip">RL · PPO</span><span class="chip">ROS / ROS 2</span></div></div>
+      <div class="stack-item"><div class="mono">03 · L3</div><strong data-i18n="st3.h">INTERACTION</strong><span data-i18n="st3.p">Speech recognition, LLMs and vision for robots that talk with people, such as the docent robot.</span>
+        <div class="chips"><span class="chip">Whisper</span><span class="chip">LLM · RAG</span><span class="chip">YOLO · Grounding DINO</span><span class="chip">OWL-ViT</span><span class="chip">OpenCV</span></div></div>
+      <div class="stack-item"><div class="mono">04</div><strong data-i18n="st4.h">PLATFORMS</strong><span data-i18n="st4.p">Robots I have deployed on.</span>
+        <div class="chips"><span class="chip">Unitree G1 · R1 · H2</span><span class="chip">Go2 · B2</span><span class="chip">AgileX PiPER · NERO</span><span class="chip">UR5e · FR5</span><span class="chip">Inspire · Revo2 · Dex3</span><span class="chip">Jetson</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 MAP -->
+<section id="loop">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="mono" data-i18n="map.mono">03 / Research map</div><h2 class="section-title" data-i18n="map.title">How the projects<br>connect</h2></div>
+      <p class="section-intro" data-i18n="map.intro">Most projects above cover one stage of the same pipeline: teleoperation, data, perception, policy and control. Click a stage for details.</p>
+    </div>
+    <div class="map-wrap reveal">
+      <div class="map" id="map">
+        <svg id="mapSvg" aria-hidden="true"></svg>
+        <i class="pulse"></i><i class="pulse"></i><i class="pulse"></i>
+        <button class="map-node" data-k="data" style="--x:50%;--y:14%" data-note-ko="<b>데이터.</b> Humanoid Studio 세션마다 동기화된 영상·관절 상태·명령을 LeRobot 데이터셋으로 기록합니다. 30분 세션은 30 Hz 기준 약 54,000 프레임의 관측·행동 쌍입니다." data-note="<b>Data.</b> Every Humanoid Studio session records synchronized video, joint state and commands as a LeRobot dataset. A 30-minute session at 30 Hz is about 54,000 frames of paired observation and action."><span><b>DATA</b><small data-i18n="map.s1">DEMONSTRATIONS</small></span></button>
+        <button class="map-node" data-k="vision" style="--x:15%;--y:46%" data-note-ko="<b>비전.</b> 픽앤플레이스를 위한 검출·분할·6-DoF 포즈, 엣지 디바이스에서의 사람 추적, HMR2.0과 키포인트 기반의 카메라 전용 휴머노이드 제어." data-note="<b>Vision.</b> Detection, segmentation and 6-DoF pose for pick-and-place, people tracking on edge devices, and camera-only humanoid control from HMR2.0 and keypoints."><span><b>VISION</b><small data-i18n="map.s2">PERCEPTION</small></span></button>
+        <button class="map-node" data-k="vla" style="--x:85%;--y:46%" data-note-ko="<b>VLA.</b> 자체 시연 데이터로 학습한 ACT·Diffusion 정책. 2026년 로드맵에 한국어 휴머노이드 VLA 모델이 있으며, KEIT 컨소시엄 제안서 초안을 작성했습니다." data-note="<b>VLA.</b> ACT and Diffusion policies trained on our own demonstrations. The 2026 roadmap adds a Korean-language humanoid VLA model, and a KEIT consortium proposal was drafted."><span><b>VLA</b><small data-i18n="map.s3">REASONING</small></span></button>
+        <button class="map-node" data-k="teleop" style="--x:29%;--y:84%" data-note-ko="<b>원격조작.</b> VDSuit와 mHand Pro 글러브를 G1, R1, H2와 네 종류의 다관절 손에 실시간 리타게팅. UR5e용 GELLO 리더 암. 과학관용 VR 인터페이스." data-note="<b>Teleop.</b> VDSuit and mHand Pro gloves retargeted live to G1, R1 and H2 and four dexterous hands. GELLO leader arm for the UR5e. A VR interface for a science museum."><span><b>TELEOP</b><small data-i18n="map.s4">HUMAN INTENT</small></span></button>
+        <button class="map-node" data-k="wbc" style="--x:71%;--y:84%" data-note-ko="<b>WBC.</b> Isaac Lab에서 강화학습으로 학습해 G1에서 실행하는 전신 컨트롤러. GR00T / SONIC 통합과 댄스 파이프라인 포함." data-note="<b>WBC.</b> Whole-body controllers trained with RL in Isaac Lab and run on the G1, including GR00T / SONIC integration and the dance pipeline."><span><b>WBC</b><small data-i18n="map.s5">ROBOT ACTION</small></span></button>
+        <button class="map-node map-core on" data-k="core" style="--x:50%;--y:50%" data-note-ko="<b>Physical AI.</b> 작업자가 원격조작으로 작업을 시연하면 로봇이 이를 기록하고, 기록한 데이터로 정책을 학습한 뒤 로봇이 그 정책을 실행합니다." data-note="<b>Physical AI.</b> An operator demonstrates a task by teleoperation, the robot records it, a policy is trained on the recording, and the robot runs that policy."><span><b>PHYSICAL<br>AI</b><small data-i18n="map.s6">PIPELINE</small></span></button>
+      </div>
+      <p class="map-note" id="mapNote" data-i18n="map.note"><b>Physical AI.</b> An operator demonstrates a task by teleoperation, the robot records it, a policy is trained on the recording, and the robot runs that policy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="mono" data-i18n="pub.mono">04 / Publications</div><h2 class="section-title" data-i18n="pub.title">Publications</h2></div>
+      <p class="section-intro" data-i18n="pub.intro">Five peer-reviewed papers on structural health monitoring and face recognition, from before I moved into robot learning. A humanoid-locomotion manuscript is in preparation.</p>
+    </div>
+    <div class="pubs reveal">
+      <div class="pub"><div class="n">01</div><div><h4>Noncontact Structural Displacement Measurements Using a Low-Cost Motion Tracking System</h4><p>Khan, S., Park, J.W., &amp; Ham, S.</p></div><div class="v">IEEE Sensors Journal · 2023<br><a href="https://doi.org/10.1109/JSEN.2023.3267450" target="_blank" rel="noopener">DOI ↗</a></div></div>
+      <div class="pub"><div class="n">02</div><div><h4>SSVM: An Ultra-Low-Power Strain Sensing and Visualization Module for Long-Term Structural Health Monitoring</h4><p>Khan, S., Won, J., Shin, J., Park, J., Park, J.W., Kim, S.E., Jang, Y., &amp; Kim, D.J.</p></div><div class="v">Sensors 21(6), 2211 · 2021<br><a href="https://doi.org/10.3390/s21062211" target="_blank" rel="noopener">DOI ↗</a></div></div>
+      <div class="pub"><div class="n">03</div><div><h4>Development of Low-Cost Wireless Sensing System for Smart Ultra-High Performance Concrete</h4><p>Le, H.V., Kim, T.U., Khan, S., Park, J.Y., Park, J.W., Kim, S.E., Jang, Y., &amp; Kim, D.J.</p></div><div class="v">Sensors 21(19), 6386 · 2021<br><a href="https://doi.org/10.3390/s21196386" target="_blank" rel="noopener">DOI ↗</a></div></div>
+      <div class="pub"><div class="n">04</div><div><h4>Facial Recognition Using Convolutional Neural Networks and Implementation on Smart Glasses</h4><p>Khan, S., Javed, M.H., Ahmed, E., Shah, S.A., &amp; Ali, S.U.</p></div><div class="v">IEEE ICISCT · 2019</div></div>
+      <div class="pub"><div class="n">05</div><div><h4>Transfer Learning of a Neural Network Using Deep Learning to Perform Face Recognition</h4><p>Khan, S., Ahmed, E., Javed, M.H., Shah, S.A., &amp; Ali, S.U.</p></div><div class="v">IEEE ICECCE · 2019</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="mono" data-i18n="pr.mono">05 / Work at WeGo Robotics</div><h2 class="section-title" data-i18n="pr.title">All projects<br>by year</h2></div>
+      <p class="section-intro" data-i18n="pr.intro">From my progress reports and the AI Team's weekly dashboard. <b>LEAD</b> means I led the project; <b>CO-DEV</b> means I built it with a teammate who led. A thumbnail shows that project's own footage or screens; client and unpublished work has none.</p>
+    </div>
+    <div id="years"></div>
+  </div>
+</section>
+
+<!-- 06 JOURNEY -->
+<section id="journey">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="mono" data-i18n="j.mono">06 / Journey</div><h2 class="section-title" data-i18n="j.title">Experience</h2></div>
+      <p class="section-intro" data-i18n="j.intro">Structural health monitoring at Chung-Ang University, mobile robots at Hanback Electronics, then humanoid robot learning at WeGo Robotics.</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="t-row"><div class="year" data-i18n="j1.y">JUL 2023 —<br>PRESENT</div><div><h3 data-i18n="j1.h">Senior Researcher · AI Team Lead</h3><div class="org" data-i18n="j1.o">WeGo Robotics, Yongin, Korea</div>
+        <ul data-i18n="j1.ul"><li>Lead the 8-person AI Team in 4 cells and run its weekly project dashboard. Built its 3-month onboarding program (5 training decks, 5 video lectures) and wrote the yearly plans and R&amp;D funding proposals, including a humanoid VLA roadmap and a KEIT consortium draft.</li><li>Built WeGo Humanoid Studio, a commercial humanoid teleoperation and skill-learning product, now on version 2.0.4.</li><li>Led paid client projects in imitation learning, edge vision, swarm robotics and field-robot kits for industrial, utility and research clients.</li><li>Research on learning-based humanoid locomotion; manuscript in preparation.</li><li>Started in the Education Team: LIMO ROS 2 textbook, Go1 SLAM, human following, LIMO autonomous driving for Cheongju Technical High School.</li></ul></div><div class="type" data-i18n="j1.t">INDUSTRY</div></div>
+      <div class="t-row"><div class="year" data-i18n="j2.y">FEB 2022 —<br>JUL 2023</div><div><h3 data-i18n="j2.h">AIoT Researcher</h3><div class="org" data-i18n="j2.o">Hanback Electronics, Daejeon</div>
+        <ul data-i18n="j2.ul"><li>ROS / ROS 2 navigation for differential, omni-wheel and car-like robots; 2D/3D SLAM and 3D mapping.</li><li>Multi-robot platoon driving with a PyQt5 GUI, ResNet-18 and YOLOv4-tiny over socket communication.</li><li>Autonomous parking, lane segmentation, AI + IMU sensor fusion, Jetson GPU clustering.</li></ul></div><div class="type" data-i18n="j2.t">INDUSTRY</div></div>
+      <div class="t-row"><div class="year" data-i18n="j3.y">MAR 2020 —<br>FEB 2022</div><div><h3 data-i18n="j3.h">Graduate Research Assistant</h3><div class="org" data-i18n="j3.o">Smart Infrastructure Technology Lab, Chung-Ang University, Seoul</div>
+        <ul data-i18n="j3.ul"><li>Ultra-low-power multi-channel strain sensing and visualization system (e-paper + QR) for structural digital twins.</li><li>Smartphone app and AWS / MySQL cloud database for field data; smart-city environmental sensor that won a national competition award.</li><li>Research funded by the National Research Foundation of Korea; joint work with Sejong University.</li></ul></div><div class="type" data-i18n="j3.t">RESEARCH</div></div>
+      <div class="t-row"><div class="year">2017 — 2018</div><div><h3 data-i18n="j4.h">Process Automation Intern</h3><div class="org" data-i18n="j4.o">Millat Tractors · Murree Brewery, Pakistan</div>
+        <ul data-i18n="j4.ul"><li>PLCs, controllers, sensors and CNC in industrial automation lines.</li></ul></div><div class="type" data-i18n="j4.t">INTERNSHIP</div></div>
+    </div>
+    <div class="two reveal">
+      <div class="card"><div class="mono" data-i18n="edu.mono">Education</div>
+        <ul class="plain" data-i18n="edu.ul">
+          <li><b>M.S., Smart Cities Engineering · Chung-Ang University, Seoul</b>2020 – 2022 · CGPA 4.45 / 4.5 · Thesis: Low-Power Multi-Channel Strain Visualization System for Digital Twin of Beam Structures</li>
+          <li><b>B.S., Electrical Engineering · Bahria University, Islamabad</b>2015 – 2019 · Silver Medal, Cum Laude · Final-year project: face recognition with a CNN on a smart-glasses HUD</li>
+        </ul></div>
+      <div class="card"><div class="mono" data-i18n="rec.mono">Recognition</div>
+        <ul class="plain" data-i18n="rec.ul">
+          <li><b>Bronze Shield</b>Korea Land &amp; Housing Corporation Smart City Competition, 2021</li>
+          <li><b>CAYSS Scholar</b>Chung-Ang University Young Scientist Scholarship</li>
+          <li><b>NRF research grant</b>Ministry of Science and ICT, Korea</li>
+          <li><b>Silver Medalist · 1st-place Final Year Project</b>Bahria University</li>
+          <li><b>Laptop Award</b>Prime Minister's Youth Program, Pakistan · Former Director of Technical Events, IEEE BUIC</li>
+        </ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container reveal">
+    <div class="mono" data-i18n="ct.mono">07 / Contact</div>
+    <h2 data-i18n="ct.h">GET IN<br><span>TOUCH</span></h2>
+    <div class="contact-bottom">
+      <div class="contact-info" data-i18n="ct.info"><b>Suleman Khan</b><br>Senior Researcher · AI Team Lead, WeGo Robotics<br>Email is the best way to reach me.</div>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:sulemank@wego-robotics.com" data-i18n="ct.b1">Work email ↗</a>
+        <a class="btn" href="mailto:khansuleman444@gmail.com" data-i18n="ct.b2">Personal email ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/suleman-khan-251981178/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/sulemank137" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="https://www.youtube.com/@wegorobotics" target="_blank" rel="noopener" data-i18n="ct.b4">YouTube ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="container">
+  <div>© <span id="year"></span> SULEMAN KHAN · KOREA</div>
+  <div>WEGO ROBOTICS · YONGIN</div>
+</div></footer>
+
+<script>
+const YEARS = [
+  { y:'2026', t:'AI Team Lead · humanoids & Physical AI', tk:'AI팀 리드 · 휴머노이드 & Physical AI', items:[
+    { ko:["WeGo Humanoid Studio 2.0", "다관절 손을 갖춘 휴머노이드를 위한 원격조작·데이터 수집·스킬 학습 제품. G1 / R1 / H2와 네 종류의 핸드를 지원하며 2.0.4 버전을 2026년 9월 30일에 출하했습니다. Meta Quest 3 VR 원격조작 모드를 개발 중입니다."], title:'WeGo Humanoid Studio 2.0', role:'lead', period:'Jan – Oct 2026', yt:'HyQ7y4xHsJo', text:'Teleoperation, data-collection and skill-learning product for humanoids with dexterous hands. Supports G1 / R1 / H2 and four hands; version 2.0.4 shipped 30 Sep 2026; a Meta Quest 3 VR teleoperation mode is in development.', chips:['Motion retargeting','LeRobot','ACT','Diffusion Policy','ZeroMQ API'] },
+    { ko:["VDSuit를 이용한 G1 전신 제어", "모션캡처 데이터를 Unitree G1에 실시간 스트리밍하고 리타게팅, KROS를 위해 RL 컨트롤러를 sim-to-sim·sim-to-real로 검증. 이후 NVIDIA GR00T 전신 제어 파이프라인을 역설계해 안정적인 VDSuit 원격조작을 구현했습니다."], title:'G1 whole-body control with VDSuit', role:'lead', period:'Jan – Apr 2026', vid:'wbc_ui', text:"Real-time motion-capture streaming to Unitree G1 with retargeting and an RL controller tested sim-to-sim and sim-to-real for KROS. Later reverse-engineered NVIDIA's GR00T whole-body-control pipeline to run stable VDSuit teleoperation.", chips:['RL','Sim-to-real','GR00T WBC','Unitree G1'] },
+    { ko:["다관절 손 리타게팅", "기업 연구소 고객을 위해 VD mHand Pro 글러브에서 Inspire RH56F1 핸드로 실시간 리타게팅. Humanoid Studio를 Ubuntu 24.04로 포팅하고 VDSuit 사용자 매뉴얼을 작성했습니다."], title:'Dexterous-hand retargeting', role:'lead', period:'Apr – Sep 2026', vid:'dex_hands', text:'Real-time retargeting from VD mHand Pro gloves to the Inspire RH56F1 hand for a corporate R&D client. Ported Humanoid Studio to Ubuntu 24.04 and wrote the VDSuit user manual.', chips:['Inspire RH56F1','mHand Pro','Retargeting'] },
+    { ko:["G1 모션 트랜스퍼: 사람 → 시뮬레이션 → 실제 로봇", "사람의 참조 동작을 G1에 리타게팅해 시뮬레이션에서 검증한 뒤 하드웨어에서 실행. WeGo 채널에 공개했습니다."], title:'G1 motion transfer: human → simulation → real robot', role:'lead', period:'Jun 2026', yt:'3nASs-xmQX4', text:'Reference human motion retargeted to the G1, validated in simulation, then run on hardware. Published on the WeGo channel.', chips:['Retargeting','Sim validation','Unitree G1'] },
+    { ko:["AI 전용 K-pop 댄스, Real2Sim2Real", "생성 이미지를 댄스 영상으로, 다시 3D 모션으로 바꿔 G1의 29개 관절에 리타게팅. 병렬 시뮬레이션 4,096개에서 강화학습하고 다른 시뮬레이터에서 검증한 뒤 실제 로봇에서 실행. 댄스 1개당 사람 작업 약 3시간, GPU 약 9시간."], title:'AI-only K-pop dance, Real2Sim2Real', role:'lead', period:'Sep 2026', vid:'video_motion', text:"A generated image turned into a dance video, then 3D motion retargeted to the G1's 29 joints. RL in 4,096 parallel simulations, checked in a second simulator, then run on the real robot. About 3 hours of human work and 9 hours of GPU time per dance.", chips:['Video → motion','RL','Sim-to-sim','Unitree G1'] },
+    { ko:["한국어 대화형 도슨트 로봇 (G1)", "한국어 안내 로봇: 자체 \"위고\" 웨이크워드, faster-whisper large-v3-turbo, Claude와 로컬 Kanana-1.5 폴백 및 사내 RAG, mink IK로 발화에 맞춘 팔 제스처. 합성 end-to-end 테스트 88/88, 한국어 입력 50개 스윕 49/50 (시뮬레이션 측정)."], title:'Korean conversational docent robot (G1)', role:'lead', period:'2026, ongoing', vid:'docent_wave', text:'Korean-speaking guide robot: custom "WeGo" wake word, faster-whisper large-v3-turbo, Claude with a local Kanana-1.5 fallback and company RAG, arm gestures synced to speech via mink IK. 88/88 on the synthetic end-to-end suite and 49/50 on a 50-input Korean sweep, measured in simulation.', chips:['STT','LLM','RAG','Wake word','mink IK'] },
+    { ko:["휴머노이드 보행 학습 (연구)", "Isaac Lab에서 Unitree G1 보행을 위한 강화학습 커리큘럼 연구. 원고 준비 중이며 상세 내용은 게재 후 공개합니다."], title:'Humanoid locomotion learning (research)', role:'lead', period:'2026, ongoing', text:'Reinforcement-learning curriculum research for Unitree G1 walking in Isaac Lab. Manuscript in preparation; details after publication.', chips:['RL','Isaac Lab','Unitree G1'] },
+    { ko:["RoboWorld 2026: 양팔 소포 처리", "KINTEX RoboWorld(2026년 11월 4–7일)에서 선보일 팀 데모 준비: 학습된 정책으로 소포를 분류하는 NERO 양팔 로봇. 현재 원격조작은 시뮬레이션에서 검증했고, 수집 데이터로 ACT와 Diffusion Policy를 end-to-end로 돌려 봤습니다."], title:'RoboWorld 2026: dual-arm parcel handling', role:'lead', period:'Sep – Nov 2026', text:'Preparing the team demo for RoboWorld at KINTEX, 4–7 Nov 2026: a NERO dual arm that sorts parcels with learned policies. So far, teleoperation is verified in simulation and ACT and Diffusion Policy run end to end on collected data.', chips:['NERO dual arm','ACT','Diffusion Policy'] },
+    { ko:["전력 IT 기업을 위한 양팔 모방학습", "동료와 함께한 유료 고객 프로젝트: FR5 두 대, myCobot 450 리더 암, DH AG95 그리퍼, 자체 제작 마스터 그리퍼로 구성한 모방학습 프레임워크. 매뉴얼과 영상 가이드와 함께 납품."], title:'Dual-arm imitation learning for a power-utility IT company', role:'lead', period:'2025 – Mar 2026', yt:'sVBeeHizY70', text:'Paid client project with a colleague: an imitation-learning framework for two FR5 arms with myCobot 450 leader arms, DH AG95 grippers and custom master grippers, delivered with manuals and video guides.', chips:['FR5 ×2','Imitation learning','Teleoperation'] },
+    { ko:["필드 로봇 키트: 사족보행 + 로봇팔", "철강 기업과 국가 시험기관을 위한 Unitree B2 / Go2 + PiPER 암용 Jetson AGX·NX 소프트웨어 키트: SLAM·내비게이션 설정과 검사 보고서. 에너지 기업 Go2의 카메라·짐벌도 업그레이드."], title:'Field robot kits: quadruped + arm', role:'co', period:'Feb – Apr 2026', text:"Jetson AGX and NX software kits for Unitree B2 / Go2 with a PiPER arm for a steel company and a national testing lab: SLAM and navigation setup and the inspection report. Also upgraded the camera and gimbal on an energy company's Go2.", chips:['Unitree B2','Go2','PiPER','SLAM','Jetson'] },
+    { ko:["과학관용 휴머노이드 VR 원격조작 UI", "관람객이 휴머노이드를 직접 조작할 수 있는 VR 원격 제어 인터페이스."], title:'Humanoid VR teleoperation UI for a science museum', role:'co', period:'Sep 2026, ongoing', text:'VR remote-control interface so museum visitors can operate a humanoid.', chips:['VR','Humanoid','UI'] },
+  ]},
+  { y:'2025', t:'AI Team · client projects & team R&D', tk:'AI팀 · 고객 프로젝트 & 팀 R&D', items:[
+    { ko:["G1 모방학습 프레임워크 (고객 지원)", "글로벌 전자부품 기업을 위한 Unitree G1 모방학습 설정과 ArUco 마커 검출, G1 교육 강의. 같은 프레임워크를 AI팀이 RoboWorld 2025에서 시연."], title:'Imitation learning framework for G1 (client support)', role:'lead', period:'2025', text:'Imitation-learning setup and ArUco-marker detection on Unitree G1 for a global electronics-components maker, plus G1 training lectures. The same framework was demonstrated by the AI Team at RoboWorld 2025.', chips:['Unitree G1','Imitation learning','ArUco'] },
+    { ko:["엣지 디바이스 사람 검출·추적", "에너지·발전 기업을 위한 ROS팀과의 SI 프로젝트: 엣지 디바이스에서 사람 검출, 카운팅, 추적."], title:'People detection and tracking at the edge', role:'lead', period:'2025', text:'System-integration project with the ROS team for an energy and power-plant company: people detection, counting and tracking on edge devices.', chips:['Detection','Tracking','Edge AI'] },
+    { ko:["로봇 군집 제어 실험", "국가 철도 연구기관 실험 지원(동료와 함께): 3D LiDAR 인지와 다중 로봇 제어용 플로킹 알고리즘."], title:'Robot swarm control experiments', role:'lead', period:'2025', text:'Experiment support for a national railroad research institute, with a colleague: 3D LiDAR perception and a flocking algorithm for multi-robot control.', chips:['3D LiDAR','Flocking','Multi-robot'] },
+    { ko:["로봇팔용 4D 비전 모듈", "대학 AI 로봇팔 프로젝트(동료와 함께): FR5·PiPER 암으로 쓰레기 분류와 젠가 쌓기."], title:'4D vision module for robot arms', role:'lead', period:'2025', text:'AI robot-arm project for a university, with a colleague: garbage sorting and Jenga stacking with FR5 and PiPER arms.', chips:['Vision AI','FR5','PiPER'] },
+    { ko:["영상 기반 G1 전신 제어", "카메라 한 대로 G1 구동: HMR2.0 3D 포즈로 팔, 2D 다리 키포인트 LSTM으로 보행, BlazeFace로 회전, 2D 손 키포인트로 손. 관련 PoC로 IT 서비스 기업을 위해 G1이 야구 동작을 수행."], title:'G1 full-body control from video', role:'lead', period:'2025', text:'Drives a G1 from a single camera: arms from HMR2.0 3D pose, walking from an LSTM on 2D leg keypoints, turning from BlazeFace, hands from 2D hand keypoints. A related proof of concept for an IT services company had G1 perform baseball motions.', chips:['HMR2.0','LSTM','BlazeFace','Unitree G1'] },
+    { ko:["GELLO 모방학습", "UR5e 카메라 통합, GELLO 리더 암으로 시연 수집, 모델 학습, 자율 정책 실행."], title:'Imitation learning with GELLO', role:'lead', period:'2025', text:'Camera integration on a UR5e, demonstration collection with the GELLO leader arm, model training and autonomous policy execution.', chips:['UR5e','GELLO','ACT'] },
+    { ko:["WeGo Hum-PER: PiPER 암으로 만든 휴머노이드", "PiPER 암 두 대로 만든 반신 휴머노이드, 웹 기반 양팔·모션 제어. 하드웨어팀과 함께 제작."], title:'WeGo Hum-PER: humanoid from PiPER arms', role:'lead', period:'2025', img:'humper', text:'Half-humanoid built from two PiPER arms with web-based dual-arm and motion control, built with the hardware team.', chips:['PiPER','Dual arm','Web control'] },
+    { ko:["Go2 RL, Inspire 핸드 + Leap Motion", "Isaac Gym / Isaac Lab에서 Unitree Go2 강화학습 훈련과 정책 배포, Leap Motion 손 추적으로 Inspire 다관절 손 제어."], title:'RL with Go2, and Inspire hand + Leap Motion', role:'lead', period:'2025', vid:'leap_hands', text:'Reinforcement-learning training and policy deployment for Unitree Go2 in Isaac Gym / Isaac Lab, plus Inspire dexterous-hand control from Leap Motion hand tracking.', chips:['Isaac Lab','RL','Go2','Leap Motion'] },
+    { ko:["G1 정밀 나사 체결", "Unitree G1과 Inspire 핸드로 나사 체결. 95%까지 도달 후 핸드 하드웨어 고장으로 보류."], title:'Dexterous screw-driving with G1', role:'co', period:'2025', img:'bolts', text:'Screw driving with Unitree G1 and Inspire hands. Reached 95%; on hold due to hand hardware failure.', chips:['Unitree G1','Inspire hands'] },
+  ]},
+  { y:'2024', t:'Education & Multi-Joint teams', tk:'교육팀 & 다관절팀', items:[
+    { ko:["청주공업고등학교: LIMO 자율주행", "학교 LIMO 로봇의 자율주행 구축: 딥러닝 모델과 GUI, 맵 이미지 라벨링 GUI, Colab 학습 노트북, YOLOv8 + ROS 2 맵 미션 알고리즘, 좁은 복도용 벽 추종."], title:'Cheongju Technical High School: LIMO autonomous driving', period:'Dec 2023 – Apr 2024', vid:'labeler', text:"Autonomous-driving setup for the school's LIMO robots: deep-learning models and a GUI, a data-labeling GUI for map images, Colab training notebooks, YOLOv8 + ROS 2 map-mission algorithms, and wall-following for narrow corridors.", chips:['LIMO Pro','YOLOv8','ROS 2','Education'] },
+    { ko:["AI EXPO 2024: LIMO 코봇 물류창고 데모", "LIMO 코봇 AI 픽앤플레이스와 단일 로봇 내비게이션, 플릿 관리(Free Fleet), ArUco 마커. 코드를 GitHub에 공개하고 교육팀 대상 딥러닝 설정 강의."], title:'AI EXPO 2024: LIMO cobot warehouse demo', period:'Apr 2024', text:'AI pick-and-place for the LIMO cobot with single-robot navigation, fleet management (Free Fleet) and ArUco markers. Code published on GitHub, plus a deep-learning setup lecture for the Education Team.', chips:['Pick & place','Free Fleet','ArUco','ROS'] },
+    { ko:["부산 로봇 엑스포용 GELLO + UR5e 데모", "엑스포 데모를 위해 실제 UR5e에서 GELLO 원격조작을 테스트하고 UMI 그리퍼 시작 가이드를 작성."], title:'GELLO + UR5e demo for the Busan Robot Expo', period:'Jun 2024', yt:'-sCcQWqDwhI', text:'Tested GELLO teleoperation on a real UR5e for the expo demo and wrote the UMI gripper getting-started manual.', chips:['GELLO','UR5e','UMI'] },
+    { ko:["PiPER 모방학습과 H1 휴머노이드 UI", "AgileX PiPER 암 모방학습 매뉴얼과 레퍼런스, D435 카메라 Grounding-DINO 검출, Unitree H1 제어 UI·섀도잉·디버깅 코드."], title:'PiPER imitation learning and H1 humanoid UI', period:'Jul – Dec 2024', img:'h1_console', text:'Imitation-learning manual and references for the AgileX PiPER arm, Grounding-DINO detection with a D435 camera, and control UI, shadowing and debugging code for Unitree H1.', chips:['PiPER','Grounding DINO','Unitree H1'] },
+    { ko:["LIMO 데모와 전시", "COEX 대한민국 교육박람회 LIMO 데모, 자동 주차와 옴니휠 내비게이션."], title:'LIMO demos and exhibitions', period:'Jan – Feb 2024', vid:'parking', text:'LIMO demos for the Korea Education Expo at COEX, plus autonomous parking and omni-wheel navigation.', chips:['LIMO','Nav2','Exhibition'] },
+  ]},
+  { y:'2023', t:'Education Team · joined WeGo in July', tk:'교육팀 · 7월 WeGo 입사', items:[
+    { ko:["AgileX LIMO ROS 2 교재", "WeGo 첫 프로젝트: URDF, 내비게이션, 센서, 자동 충전을 다루는 12장 구성의 AgileX LIMO ROS 2 교재, 장마다 데모 포함."], title:'AgileX LIMO ROS 2 textbook', period:'Jul – Sep 2023', text:'First project at WeGo: a 12-chapter ROS 2 textbook for the AgileX LIMO covering URDF, navigation, sensors and auto-charging, with a demo per chapter.', chips:['ROS 2','Nav2','URDF','Education'] },
+    { ko:["Unitree Go1: SLAM & 내비게이션", "Go1 사족보행 로봇의 LiDAR 매핑과 자율 주행, 무선·키보드 제어 구축; 이후 로봇팔을 장착하고 픽 데모용 ROS 패키지 설정."], title:'Unitree Go1: SLAM & navigation', period:'Sep – Oct 2023', text:'Brought up the Go1 quadruped for LiDAR mapping and autonomous navigation with wireless and keyboard control; later mounted a robot arm and set up its ROS package for a pick demo.', chips:['Quadruped','SLAM','Nav2','LiDAR'] },
+    { ko:["카메라 기반 사람 추종 로봇", "YOLO 검출·추적 기반 사람 추종, 다인 환경에서도 견고; Go1과 Scout Mini에서 테스트."], title:'Camera-based human-following robot', period:'Oct – Nov 2023', text:'Vision-based person following with YOLO detection and tracking, robust in multi-person scenes; tested on Go1 and Scout Mini.', chips:['YOLO','Tracking','ROS'] },
+  ]},
+];
+
+document.getElementById('nYrs').textContent = Math.floor((Date.now() - new Date(2022, 1, 1)) / 315576e5); // robotics since Hanback, Feb 2022 (LinkedIn)
+document.getElementById('nProj').textContent = YEARS.reduce((n, y) => n + y.items.length, 0);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function renderYears(lang){
+const ko = lang === 'ko';
+document.getElementById('years').innerHTML = YEARS.map(y => `
+  <div class="yearblock reveal">
+    <div class="ylabel"><strong>${y.y}</strong><span>${esc(ko ? y.tk : y.t)}</span><span class="mono" style="margin-top:14px">${ko ? y.items.length + '개 프로젝트' : String(y.items.length).padStart(2,'0') + ' projects'}</span></div>
+    <div class="rows">${y.items.map(p => `
+      <div class="row">
+        <div class="when">${esc(p.period)}</div>
+        <div><h3>${esc(ko ? p.ko[0] : p.title)}</h3><p>${esc(ko ? p.ko[1] : p.text)}</p>
+          <div class="chips">${p.role ? `<span class="chip ${p.role}">${p.role==='lead'?'LEAD':'CO-DEV'}</span>` : ''}${p.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div></div>
+        <div class="side">${p.yt ? `<a class="thumb" href="https://www.youtube.com/watch?v=${p.yt}" target="_blank" rel="noopener" title="YouTube"><img src="assets/yt_${p.yt}.jpg" alt="" loading="lazy"></a>` : p.vid ? `<video class="thumb" muted loop playsinline preload="none" poster="assets/${p.vid}.jpg" data-autoplay><source src="assets/${p.vid}.mp4" type="video/mp4"></video>` : p.img ? `<img class="thumb" src="assets/${p.img}.jpg" alt="" loading="lazy">` : ''}</div>
+      </div>`).join('')}</div>
+  </div>`).join('');
+}
+
+if (location.search.includes('shot')) document.head.insertAdjacentHTML('beforeend','<style>.reveal{opacity:1!important;transform:none!important}*{animation:none!important}.hero,.contact{min-height:0!important}</style>');
+const header = document.getElementById('header');
+document.getElementById('year').textContent = new Date().getFullYear();
+window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 30));
+
+const cursor = document.getElementById('cursor');
+if (window.matchMedia('(pointer:fine)').matches) {
+  window.addEventListener('mousemove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; });
+  document.body.addEventListener('mouseover', e => {
+    const hot = e.target.closest('a,button,.project,.yt');
+    cursor.style.width = cursor.style.height = hot ? '34px' : '18px';
+    cursor.style.borderColor = hot ? 'rgba(98,230,176,.8)' : 'rgba(255,255,255,.45)';
+  });
+}
+
+const reveal = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => reveal.observe(el));
+
+// play looping clips only while on screen
+const vids = new IntersectionObserver(es => es.forEach(e => { const v = e.target; e.isIntersecting ? v.play().catch(()=>{}) : v.pause(); }), {threshold:.25});
+document.querySelectorAll('video[data-autoplay]').forEach(v => vids.observe(v));
+
+// YouTube facade: load the iframe on click
+document.querySelectorAll('.yt').forEach(el => el.addEventListener('click', () => {
+  const f = document.createElement('iframe');
+  f.src = `https://www.youtube-nocookie.com/embed/${el.dataset.id}?autoplay=1&rel=0`;
+  f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true; f.title = 'YouTube video';
+  el.replaceChildren(f); el.classList.remove('yt');
+}));
+
+const note = document.getElementById('mapNote'), nodes = document.querySelectorAll('.map-node');
+// ---- animated loop: edges drawn from live node positions, pulses travel the ring
+const mapEl = document.getElementById('map'), mapSvg = document.getElementById('mapSvg'), NS = 'http://www.w3.org/2000/svg';
+const RING = ['teleop', 'data', 'vision', 'vla', 'wbc'];   // human intent → data → perception → reasoning → action → back
+const NODE = {}; nodes.forEach(n => NODE[n.dataset.k] = n);
+const pos = {}, edges = [];
+function buildMap(){
+  const m = mapEl.getBoundingClientRect(); mapSvg.setAttribute('viewBox', `0 0 ${m.width} ${m.height}`);
+  mapSvg.textContent = ''; edges.length = 0;
+  for (const k in NODE){ const r = NODE[k].getBoundingClientRect(); pos[k] = [r.left - m.left + r.width / 2, r.top - m.top + r.height / 2]; }
+  const add = (a, b, cls) => { const l = document.createElementNS(NS, 'line');
+    l.setAttribute('x1', pos[a][0]); l.setAttribute('y1', pos[a][1]); l.setAttribute('x2', pos[b][0]); l.setAttribute('y2', pos[b][1]);
+    l.setAttribute('class', 'edge ' + cls); l.dataset.a = a; l.dataset.b = b; mapSvg.appendChild(l); edges.push(l); };
+  RING.forEach((a, i) => add(a, RING[(i + 1) % RING.length], 'ring'));
+  RING.forEach(a => add('core', a, 'spoke'));
+  light(document.querySelector('.map-node.on').dataset.k);
+}
+function light(k){ edges.forEach(l => l.classList.toggle('lit', k === 'core' ? l.dataset.a === 'core' : (l.dataset.a === k || l.dataset.b === k))); }
+const pulses = mapEl.querySelectorAll('.pulse');
+function ringPoint(t){ // t in [0,1) along the closed ring polyline
+  const pts = RING.map(k => pos[k]), segs = pts.map((p, i) => { const q = pts[(i + 1) % pts.length]; return Math.hypot(q[0] - p[0], q[1] - p[1]); });
+  let d = t * segs.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < pts.length; i++){ if (d <= segs[i]){ const p = pts[i], q = pts[(i + 1) % pts.length], f = d / segs[i]; return [p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f]; } d -= segs[i]; }
+  return pts[0];
+}
+const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tick(now){ pulses.forEach((el, i) => { const [x, y] = ringPoint(((now / 9000) + i / pulses.length) % 1); el.style.transform = `translate(${x}px,${y}px)`; }); if (!still) requestAnimationFrame(tick); }
+new ResizeObserver(buildMap).observe(mapEl); buildMap(); requestAnimationFrame(tick);
+nodes.forEach(n => n.addEventListener('click', () => { nodes.forEach(m => m.classList.remove('on')); n.classList.add('on'); light(n.dataset.k); note.innerHTML = LANG === 'ko' ? n.dataset.noteKo : n.dataset.note; }));
+
+// ---- i18n: English lives in the markup, Korean in KO
+const KO = {"nav.work": "작업", "nav.pubs": "논문", "nav.projects": "프로젝트", "nav.journey": "경력", "nav.contact": "연락", "nav.cta": "연락하기 ↗", "hero.eyebrow": "<span class=\"dot\"></span> 휴머노이드 · 로봇 학습 · 용인, 대한민국", "hero.copy": "<b>WeGo Robotics 선임연구원이자 AI팀 리드</b>입니다. 휴머노이드 원격조작, 모션 리타게팅, 모방학습과 강화학습을 연구하고 <b>WeGo Humanoid Studio</b> 개발을 이끌고 있습니다.", "hero.b1": "주요 작업 ↓", "hero.b2": "WeGo 유튜브 ↗", "stat1.l": "로봇 분야 경력, 2022년 2월부터 한백전자·WeGo Robotics", "stat2.l": "프로젝트 및 고객 납품, 2023 – 2026", "stat3.l": "제가 이끄는 AI팀 인원, 4개 셀", "stat4.l": "동료심사 논문, 준비 중인 원고 1편", "hero.role": "선임연구원 · AI팀 리드", "work.mono": "01 / 주요 작업", "work.title": "최근<br>작업", "work.intro": "2025–2026년 프로젝트 일곱 가지. 영상은 직접 촬영한 것이거나 제 작업을 담은 WeGo 채널 영상입니다. <b>LEAD</b>는 제가 주도한 일, <b>CO-DEV</b>는 주도한 동료와 함께 만든 일입니다.", "c1.mono": "01 — 제품 · 2026 · <span class=\"ac\">LEAD</span>", "c1.cap": "홍보 영상 · WeGo Humanoid Studio 2.0", "c1.p": "휴머노이드 원격조작, 시연 기록, 정책 학습(ACT, Diffusion)을 위한 소프트웨어입니다. VDSuit로 Unitree G1, R1, H2를 3D 미리보기와 함께 실시간 구동하고 네 종류의 다관절 손을 지원합니다. 기업 연구소 현장 설치 후 2026년 9월 30일 2.0.4 버전을 배포했습니다.", "c2.mono": "02 — 모션 트랜스퍼 · 2026 · <span class=\"ac\">LEAD</span>", "c2.cap": "WeGo 유튜브 · 사람 → 시뮬레이션 → 실제 로봇", "c2.h": "G1 모션 트랜스퍼", "c2.p": "사람의 참조 동작을 Unitree G1에 리타게팅해 시뮬레이션에서 확인한 뒤 실제 로봇에서 실행했습니다.", "c3.mono": "03 — 원격조작 · 2026 · <span class=\"ac\">LEAD</span>", "c3.cap": "랩 촬영 · VDSuit → G1 + Inspire 핸드", "c3.h": "전신 원격조작과 다관절 손 리타게팅", "c3.p": "VDSuit 모션캡처를 G1에 실시간 스트리밍하고, KROS를 위해 RL 컨트롤러를 sim-to-sim·sim-to-real로 검증했습니다. 2026년 4월에는 NVIDIA GR00T 전신 제어 파이프라인을 역설계해 실시간 원격조작을 안정화했습니다. 기업 연구소 고객을 위해 VD mHand Pro 글러브를 Inspire RH56F1 핸드에 리타게팅했습니다.", "c4.cap": "홍보 영상 · 댄스 파이프라인", "c4.h": "생성 이미지 한 장으로 만든 K-pop 댄스", "c4.p": "생성한 이미지 한 장을 10초 댄스 영상으로, 다시 3D 인체 모션으로 바꿔 G1의 29개 관절에 리타게팅했습니다. 병렬 시뮬레이션 4,096개에서 30,000회 반복 강화학습한 정책이 다른 시뮬레이터 검증 10/10을 통과한 뒤 실제 로봇에서 실행됐습니다. 댄스 1개당 사람 작업 약 3시간, GPU 약 9시간이 들었습니다.", "c5.mono": "05 — 전신 제어 · 2026", "c5.cap": "WeGo 유튜브 · G1 리타게팅 &amp; 전신 제어", "c5.h": "G1 리타게팅과 전신 제어", "c5.p": "Unitree G1에서 전신 컨트롤러와 함께 동작하는 실시간 모션 리타게팅. KRoC 2026에서 시연했습니다.", "c6.mono": "06 — 인터랙션 · 2026 · <span class=\"ac\">LEAD</span>", "c6.cap": "제스처 라이브러리 · G1 인사 동작, MuJoCo 렌더", "c6.h": "한국어 대화형 도슨트 로봇", "c6.p": "자체 \"위고\" 웨이크워드, faster-whisper large-v3-turbo 음성인식, Claude와 로컬 Kanana-1.5 폴백, 사내 문서 RAG, mink IK로 발화에 맞춘 팔 제스처로 구성됩니다. 2026년 10월 2일 시뮬레이션에서 합성 end-to-end 테스트 88/88, 한국어 입력 50개 중 49개를 통과했고 끼어들기를 0.57초 안에 감지했습니다.", "c7.mono": "07 — 고객 프로젝트 · 2025 – 2026.03 · <span class=\"ac\">LEAD</span>", "c7.cap": "WeGo 유튜브 · FR 양팔 원격조작", "c7.h": "전력 IT 기업을 위한 양팔 모방학습", "c7.p": "동료와 함께 구축: FR5 두 대, myCobot 450 리더 암, DH AG95 그리퍼, 자체 제작 마스터 그리퍼로 데이터 수집·학습·로봇 추론까지. 2026년 3월 매뉴얼, 영상 가이드와 함께 납품했습니다.", "st.mono": "02 / 기술 스택", "st.title": "기술과<br>도구", "st.intro": "실무에서 쓰는 기술을 분야별로 정리했습니다.", "st1.h": "학습", "st1.p": "VLA 모델, 모방학습, 그리고 학습에 쓰는 원격조작 데이터 파이프라인.", "st2.h": "제어", "st2.p": "휴머노이드 모션 리타게팅, 전신 제어, 강화학습.", "st3.h": "인터랙션", "st3.p": "도슨트 로봇처럼 사람과 대화하는 로봇을 위한 음성인식, LLM, 비전.", "st4.h": "플랫폼", "st4.p": "직접 배포해 본 로봇들.", "map.mono": "03 / 연구 지도", "map.title": "프로젝트들의<br>연결", "map.intro": "위 프로젝트 대부분은 원격조작, 데이터, 인지, 정책, 제어로 이어지는 하나의 파이프라인 중 한 단계를 다룹니다. 단계를 클릭하면 설명이 나옵니다.", "map.s1": "시연 데이터", "map.s2": "인지", "map.s3": "추론", "map.s4": "사람의 의도", "map.s5": "로봇의 행동", "map.s6": "파이프라인", "map.note": "<b>Physical AI.</b> 작업자가 원격조작으로 작업을 시연하면 로봇이 이를 기록하고, 기록한 데이터로 정책을 학습한 뒤 로봇이 그 정책을 실행합니다.", "pub.mono": "04 / 논문", "pub.title": "논문", "pub.intro": "로봇 학습으로 옮기기 전 구조물 건전성 모니터링과 얼굴 인식 분야에서 발표한 동료심사 논문 5편입니다. 휴머노이드 보행 원고를 준비 중입니다.", "pr.mono": "05 / WeGo Robotics에서의 작업", "pr.title": "연도별<br>전체 프로젝트", "pr.intro": "진행 보고서와 AI팀 주간 대시보드에서 정리했습니다. <b>LEAD</b>는 제가 주도한 일, <b>CO-DEV</b>는 주도한 동료와 함께 만든 일입니다. 썸네일은 해당 프로젝트의 실제 영상이나 화면이며, 고객사·미공개 작업에는 없습니다.", "j.mono": "06 / 경력", "j.title": "경력", "j.intro": "중앙대학교에서 구조물 건전성 모니터링, 한백전자에서 모바일 로봇, 이후 WeGo Robotics에서 휴머노이드 로봇 학습을 다뤘습니다.", "j1.y": "2023.07 —<br>현재", "j1.h": "선임연구원 · AI팀 리드", "j1.o": "WeGo Robotics, 용인", "j1.ul": "<li>4개 셀 8명의 AI팀을 이끌고 주간 프로젝트 대시보드를 운영합니다. 3개월 온보딩 프로그램(교육 덱 5종, 영상 강의 5편)을 만들고 연간 계획과 R&D 펀딩 제안서를 작성했습니다. 휴머노이드 VLA 로드맵과 KEIT 컨소시엄 초안 포함.</li><li>상용 휴머노이드 원격조작·스킬 학습 제품 WeGo Humanoid Studio를 구축, 현재 2.0.4 버전.</li><li>산업·공공·연구 고객을 위한 모방학습, 엣지 비전, 군집 로봇, 필드 로봇 키트 유료 프로젝트를 주도.</li><li>학습 기반 휴머노이드 보행 연구; 원고 준비 중.</li><li>교육팀에서 시작: LIMO ROS 2 교재, Go1 SLAM, 사람 추종, 청주공업고 LIMO 자율주행.</li>", "j1.t": "산업", "j2.t": "산업", "j2.y": "2022.02 —<br>2023.07", "j2.h": "AIoT 연구원", "j2.o": "한백전자, 대전", "j2.ul": "<li>차동·옴니휠·차량형 로봇의 ROS / ROS 2 내비게이션; 2D/3D SLAM과 3D 매핑.</li><li>PyQt5 GUI, ResNet-18, YOLOv4-tiny와 소켓 통신 기반 다중 로봇 군집 주행.</li><li>자동 주차, 차선 분할, AI + IMU 센서 융합, Jetson GPU 클러스터링.</li>", "j3.y": "2020.03 —<br>2022.02", "j3.h": "대학원 연구조교", "j3.o": "중앙대학교 스마트인프라기술연구실, 서울", "j3.ul": "<li>구조물 디지털 트윈을 위한 초저전력 다채널 변형률 센싱·시각화 시스템(e-paper + QR).</li><li>현장 데이터용 스마트폰 앱과 AWS / MySQL 클라우드 DB; 국가 공모전 수상 스마트시티 환경 센서.</li><li>한국연구재단 지원 연구; 세종대학교와 공동 연구.</li>", "j3.t": "연구", "j4.h": "공정 자동화 인턴", "j4.o": "Millat Tractors · Murree Brewery, 파키스탄", "j4.ul": "<li>산업 자동화 라인의 PLC, 컨트롤러, 센서, CNC.</li>", "j4.t": "인턴십", "edu.mono": "학력", "edu.ul": "<li><b>석사, 스마트시티공학 · 중앙대학교, 서울</b>2020 – 2022 · 평점 4.45 / 4.5 · 논문: 보 구조물 디지털 트윈을 위한 저전력 다채널 변형률 시각화 시스템</li><li><b>학사, 전기공학 · Bahria University, 이슬라마바드</b>2015 – 2019 · 은메달, Cum Laude · 졸업 프로젝트: 스마트글라스 HUD 위 CNN 얼굴 인식</li>", "rec.mono": "수상·장학", "rec.ul": "<li><b>동상 (Bronze Shield)</b>한국토지주택공사 스마트시티 공모전, 2021</li><li><b>CAYSS 장학생</b>중앙대학교 젊은 과학자 장학금</li><li><b>NRF 연구과제</b>과학기술정보통신부 · 한국연구재단</li><li><b>은메달 · 졸업 프로젝트 1위</b>Bahria University</li><li><b>노트북 어워드</b>파키스탄 총리 청년 프로그램 · IEEE BUIC 기술행사 디렉터 역임</li>", "ct.mono": "07 / 연락", "ct.h": "연락<br><span>주세요</span>", "ct.info": "<b>Suleman Khan</b><br>WeGo Robotics 선임연구원 · AI팀 리드<br>이메일로 연락 주세요.", "ct.b1": "업무 이메일 ↗", "ct.b2": "개인 이메일 ↗", "ct.b4": "유튜브 ↗", "stat1.u": "년+"};
+let LANG = 'en';
+const langBtn = document.getElementById('langBtn');
+function setLang(l){
+  LANG = l; document.documentElement.lang = l;
+  try { localStorage.setItem('lang', l); } catch(e){}
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+    const v = l === 'ko' ? KO[el.dataset.i18n] : el.dataset.en;
+    if (v !== undefined) el.innerHTML = v;
+  });
+  renderYears(l);
+  document.querySelectorAll('#years .reveal').forEach(el => reveal.observe(el));
+  document.querySelectorAll('#years video[data-autoplay]').forEach(v => vids.observe(v));
+  const on = document.querySelector('.map-node.on'); if (on) note.innerHTML = l === 'ko' ? on.dataset.noteKo : on.dataset.note;
+  langBtn.textContent = l === 'ko' ? 'English' : '한국어';
+}
+langBtn.addEventListener('click', () => setLang(LANG === 'ko' ? 'en' : 'ko'));
+let initial = 'en';
+try { initial = new URLSearchParams(location.search).get('lang') || localStorage.getItem('lang') || 'en'; } catch(e){}
+setLang(initial === 'ko' ? 'ko' : 'en');
+</script>
+</body>
+</html>
